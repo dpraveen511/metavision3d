@@ -82,15 +82,15 @@ def check_files():
         missing_filesAD = filesA - filesD
         
         if missing_filesAD:
-            for missing_file in missing_filesAB:
+            for missing_file in missing_filesAD:
                 print("creating inverted file  for :",missing_file)
-                create_boundary(missing_file)
+                invert(missing_file)
         else:
             print("All files from Original are present in Inverted.")
         if missing_filesAB:
-            for missing_file in missing_filesAC:
+            for missing_file in missing_filesAB:
                 print("computing boundary for:", missing_file)
-                compute_maximum(missing_file)
+                create_boundary(missing_file)
         else:
             print("All files from Orignal are present in Boundary.")
         # if missing_filesAC:
