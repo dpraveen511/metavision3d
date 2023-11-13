@@ -1,0 +1,7 @@
+Flask
+Flask-CORS
+APScheduler
+nibabel
+numpy
+waitress
+scipy

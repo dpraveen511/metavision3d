@@ -108,4 +108,5 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(func=check_files, trigger="interval", minutes=1)
 scheduler.start()
 if __name__ == '__main__':
-    app.run(debug=False,port=5000)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000)
