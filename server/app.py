@@ -81,24 +81,24 @@ def check_files():
         missing_filesAC = filesA - filesC
         missing_filesAD = filesA - filesD
         
-        if missing_filesAB:
+        if missing_filesAD:
             for missing_file in missing_filesAB:
-                print("creating boundary for :",missing_file)
+                print("creating inverted file  for :",missing_file)
                 create_boundary(missing_file)
         else:
-            print("All files from FolderA are present in FolderB.")
-        if missing_filesAC:
+            print("All files from Original are present in Inverted.")
+        if missing_filesAB:
             for missing_file in missing_filesAC:
-                print("computing maximum for:", missing_file)
+                print("computing boundary for:", missing_file)
                 compute_maximum(missing_file)
         else:
-            print("All files from FolderA are present in FolderC.")
-        if missing_filesAD:
-            for missing_file in missing_filesAD:
-                print("computing maximum for:", missing_file)
-                invert(missing_file)
-        else:
-            print("All files from FolderA are present in FolderC.")
+            print("All files from Orignal are present in Boundary.")
+        # if missing_filesAC:
+        #     for missing_file in missing_filesAD:
+        #         print("computing maximum for:", missing_file)
+        #         invert(missing_file)
+        # else:
+        #     print("All files from FolderA are present in FolderC.")
         
     except Exception as e:
         print(f"Error checking files: {str(e)}")
