@@ -15,10 +15,10 @@ def greeting():
 @app.route('/api/listfiles')
 def list_files():
     try:
-        files = [f for f in os.listdir('../Data/Original')] 
-        mime_type, _ = mimetypes.guess_type('.Images/ColumnMajorOrder.gii')
+        files = [f for f in os.listdir('../Data/Original') if not f.startswith('.')] 
+        # mime_type, _ = mimetypes.guess_type('.Images/ColumnMajorOrder.gii')
         print("here")
-        print(f"MIME type of column: {mime_type}")
+        # print(f"MIME type of column: {mime_type}")
         print(os.path.isfile(files[0])) #if os.path.isfile(os.path.join('.Images', f))]
         return jsonify({"files": files})
     except Exception as e:

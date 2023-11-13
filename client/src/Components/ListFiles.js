@@ -43,6 +43,7 @@ function ListFiles() {
                 // // Set the initialRender ref to false after the first render
                 // initialRender.current = false;
             });
+            console.log(process.env.NODE_ENV);
     }, [firstRender]);
 
     const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
