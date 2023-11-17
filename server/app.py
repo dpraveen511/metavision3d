@@ -12,7 +12,7 @@ CORS(app)
 def greeting():
     return jsonify({"message": "Hello from Flask!"})
 
-@app.route('/api/listfiles')
+@app.route('/listfiles')
 def list_files():
     try:
         files = [f for f in os.listdir('../Data/Original') if not f.startswith('.')] 
