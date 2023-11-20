@@ -55,7 +55,7 @@ function ListFiles() {
         }
     
         // Define the URL where the file is being served
-        const fileURL = `http://localhost:3001/Original/${selectedFile}`;
+        const fileURL = `https://devmetavision3d.rc.ufl.edu/data/Original/${selectedFile}`;
     
         try {
             const response = await fetch(fileURL);
