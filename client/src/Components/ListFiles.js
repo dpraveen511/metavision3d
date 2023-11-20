@@ -48,7 +48,7 @@ function ListFiles() {
 
     const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
-    const handleDownload = async () => {
+    const handleDownload = () => {
         if (!selectedFile) {
             console.error("No file selected for download.");
             return;
@@ -57,21 +57,13 @@ function ListFiles() {
         // Define the URL where the file is being served
         const fileURL = `https://devmetavision3d.rc.ufl.edu/data/Original/${selectedFile}`;
     
-        try {
-            const response = await fetch(fileURL);
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-    
-            const blob = await response.blob();
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = selectedFile; // Set the file name. Default is the URL's filename.
-            link.click();
-            URL.revokeObjectURL(link.href);
-        } catch (error) {
-            console.error("There was a problem with the fetch operation:", error.message);
-        }
+        // Create a link and trigger the download
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = selectedFile; // Set the file name. Default is the URL's filename.
+        document.body.appendChild(link); // Append to body to ensure visibility in older browsers
+        link.click();
+        document.body.removeChild(link); // Clean up
     };
     
     
