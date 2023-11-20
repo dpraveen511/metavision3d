@@ -12,7 +12,7 @@ function DisplayFile(props) {
   function runMaxProjection(){
     console.log("I ran");
     console.log(`http://localhost:3001/Inverted/${props.fileName}`)
-    fetch(`/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}`)
+    fetch(`/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -65,7 +65,7 @@ function DisplayFile(props) {
 
   function runProjection(){
     console.log("Running Projection");
-    fetch(`/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}`)
+    fetch(`/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

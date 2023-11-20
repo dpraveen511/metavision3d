@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://devmetavision3d.rc.ufl.edu/api",
+  "proxy": "https://devmetavision3d.rc.ufl.edu",
   "dependencies": {
     "@niivue/niivue": "^0.38.1",
     "@testing-library/jest-dom": "^5.17.0",
