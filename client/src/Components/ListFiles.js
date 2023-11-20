@@ -30,7 +30,7 @@ function ListFiles() {
     };
 
     useEffect(() => {
-        fetch('/api/listfiles')
+        fetch(`${process.env.FLASK_API_URL}/api/listfiles`)
             .then(response => response.json())
             .then(data => {
                 setFiles(data.files);
@@ -55,7 +55,7 @@ function ListFiles() {
         }
     
         // Define the URL where the file is being served
-        const fileURL = `https://devmetavision3d.rc.ufl.edu/data/Original/${selectedFile}`;
+        const fileURL = `${process.env.FLASK_API_URL}/data/Original/${selectedFile}`;
     
         // Create a link and trigger the download
         const link = document.createElement("a");
