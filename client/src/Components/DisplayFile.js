@@ -12,7 +12,7 @@ function DisplayFile(props) {
   function runMaxProjection(){
     console.log("I ran");
     console.log(`http://localhost:3001/Inverted/${props.fileName}`)
-    fetch(`${process.env.FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -27,7 +27,7 @@ function DisplayFile(props) {
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -65,7 +65,7 @@ function DisplayFile(props) {
 
   function runProjection(){
     console.log("Running Projection");
-    fetch(`${process.env.FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -80,7 +80,7 @@ function DisplayFile(props) {
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -142,7 +142,7 @@ function DisplayFile(props) {
     console.log("Printing at the start of renderning")
     var volumeList1 = [
       {
-        url: `${process.env.FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
         colormap: "gray",
         opacity: 0.2,
         visible: true,
@@ -189,7 +189,7 @@ function DisplayFile(props) {
     if (props.fileName) {
       var volumeList1 = [
           {
-            url: `${process.env.FLASK_API_URL}/data/Inverted/${props.fileName}`,
+            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
             colormap: "actc",
             opacity: 1,
             visible: true,   
@@ -199,7 +199,7 @@ function DisplayFile(props) {
       nv1.onImageLoaded = function(volume){
         console.log('volume loaded');
       }
-      var url = `${process.env.FLASK_API_URL}/data/Inverted/${props.fileName}`
+      var url = `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`
       console.log(url);
       if(nv1Url === null){
         console.log("nv1 is already loaded")
@@ -214,7 +214,7 @@ function DisplayFile(props) {
       const cacheBuster = `?_${new Date().getTime()}`;
       var volumeList2 = [
           {
-            url: `${process.env.FLASK_API_URL}/data/Inverted/${props.fileName}`,
+            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
             Name: 'UE',
             colormap: "actc",
             opacity: 0.5,
@@ -222,7 +222,7 @@ function DisplayFile(props) {
             },        
         ];
       nv2.loadVolumes(volumeList2);
-      setNv2MainUrl(`${process.env.FLASK_API_URL}/data/Inverted/${props.fileName}`)
+      setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
       nv2.setSliceType(nv2.sliceTypeRender);
           
     }

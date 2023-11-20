@@ -18,8 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build-dev": "cross-env FLASK_API_URL=https://devmetavision3d.rc.ufl.edu react-scripts build",
-    "build": "cross-env FLASK_API_URL=https://metavision3d.rc.ufl.edu react-scripts build",
+    "build-dev": "cross-env REACT_APP_FLASK_API_URL=https://devmetavision3d.rc.ufl.edu react-scripts build",
+    "build": "cross-env REACT_APP_FLASK_API_URL=https://metavision3d.rc.ufl.edu react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

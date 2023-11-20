@@ -30,7 +30,7 @@ function ListFiles() {
     };
 
     useEffect(() => {
-        fetch(`${process.env.FLASK_API_URL}/api/listfiles`)
+        fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/listfiles`)
             .then(response => response.json())
             .then(data => {
                 setFiles(data.files);
@@ -55,7 +55,7 @@ function ListFiles() {
         }
     
         // Define the URL where the file is being served
-        const fileURL = `${process.env.FLASK_API_URL}/data/Original/${selectedFile}`;
+        const fileURL = `${process.env.REACT_APP_FLASK_API_URL}/data/Original/${selectedFile}`;
     
         // Create a link and trigger the download
         const link = document.createElement("a");
