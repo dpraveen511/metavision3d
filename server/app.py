@@ -34,7 +34,7 @@ def get_file():
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500  
 
-@app.route('/api/max', methods=['GET'])
+@app.route('/max', methods=['GET'])
 def calc_custom_max():
     file_name = request.args.get('fileName')
     smooth = request.args.get('smooth')
@@ -43,13 +43,13 @@ def calc_custom_max():
     try:
         result = compute_custome_maximum(file_name, maxPercentile, smooth)
         print("custom max projection got computed")
-        return jsonify({"url": f'http://localhost:3001/Temp/{result}'})
+        return jsonify({"url": f'https://devmetavision3d.rc.ufl.edu/data/Temp/{result}'})
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500     
 
 
-@app.route('/api/project', methods=['GET'])
+@app.route('/project', methods=['GET'])
 def calc_projection():
     file_name = request.args.get('fileName')
     smooth = request.args.get('smooth')
@@ -59,7 +59,7 @@ def calc_projection():
     try:
         result = compute_projection(file_name, min, max, smooth)
         print("custom max projection got computed")
-        return jsonify({"url": f'http://localhost:3001/Temp/{result}'})
+        return jsonify({"url": f'https://devmetavision3d.rc.ufl.edu/data/Temp/{result}'})
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500 

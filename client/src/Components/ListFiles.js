@@ -30,7 +30,7 @@ function ListFiles() {
     };
 
     useEffect(() => {
-        fetch('/api/listfiles')
+        fetch('/listfiles')
             .then(response => response.json())
             .then(data => {
                 setFiles(data.files);
