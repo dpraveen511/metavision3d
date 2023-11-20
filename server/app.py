@@ -23,16 +23,7 @@ def list_files():
         return jsonify({"files": files})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
-@app.route('/api/file', methods=['GET'])
-def get_file():
-    file_name = request.args.get('filename')
-    try:
-        
-        return send_from_directory(directory='./Images', path=file_name)
-    except Exception as e:
-        print("Error:", str(e))
-        return jsonify({"error": str(e)}), 500  
+     
 
 @app.route('/max', methods=['GET'])
 def calc_custom_max():
