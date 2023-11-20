@@ -1,4 +1,5 @@
 import React, { useState, useEffect,useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import DisplayFile from './DisplayFile.js';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Input, Label, FormGroup} from 'reactstrap';
 import '../App.css'
@@ -18,6 +19,8 @@ function ListFiles() {
     const [smoothness, setSmoothness] = useState(0);
     const [runClicked, setRunClicked] = useState(false);
     const [projectClicked, setProjectClicked] = useState(false);
+    const [sessionId,setSessionId] = useState(null);
+    const [sessionName,setSessionName] = useState("meta_vision_session_id");
 
     const handleProjection = () => {
         setProjectClicked(true);
@@ -29,7 +32,37 @@ function ListFiles() {
         console.log("Run clicked")
     };
 
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            let date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+    
+    function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
     useEffect(() => {
+        const sessionIdCookieName = sessionName;
+        let currentSessionId = getCookie(sessionIdCookieName);
+
+        if (!currentSessionId) {
+            currentSessionId = uuidv4();
+            setCookie(sessionIdCookieName, currentSessionId, 7); // Set for 7 days, adjust as needed
+        }
+        setSessionId(getCookie(sessionName));
+
         fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/listfiles`)
             .then(response => response.json())
             .then(data => {
@@ -43,6 +76,7 @@ function ListFiles() {
                 // // Set the initialRender ref to false after the first render
                 // initialRender.current = false;
             });
+
             console.log(process.env.NODE_ENV);
     }, [firstRender]);
 
@@ -181,6 +215,7 @@ function ListFiles() {
             onProjectProcessed={() => {setProjectClicked(false);}}
             min={minIntensity}
             max={maxIntensity}
+            session_id = {sessionId}
             ></DisplayFile>
         </div>
     );

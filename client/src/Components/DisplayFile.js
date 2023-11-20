@@ -12,7 +12,7 @@ function DisplayFile(props) {
   function runMaxProjection(){
     console.log("I ran");
     console.log(`http://localhost:3001/Inverted/${props.fileName}`)
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -65,7 +65,7 @@ function DisplayFile(props) {
 
   function runProjection(){
     console.log("Running Projection");
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

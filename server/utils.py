@@ -2,6 +2,7 @@ import nibabel as nib
 import numpy as np
 from scipy.ndimage import binary_dilation, binary_erosion
 from scipy.ndimage import gaussian_filter
+import os
 
 def create_boundary(fileName):
     img = nib.load(f'../Data/Inverted/{fileName}')
@@ -51,7 +52,7 @@ def smooth_mask(data, sigma=1):
     smoothed = gaussian_filter(data.astype(float), sigma=sigma)
     return smoothed
 
-def compute_custome_maximum(fileName, maxPercentile, smooth):
+def compute_custome_maximum(fileName, maxPercentile, smooth, session_id):
     img = nib.load(f'../Data/Inverted/{fileName}')
     data = img.get_fdata()
     print("here")
@@ -70,12 +71,14 @@ def compute_custome_maximum(fileName, maxPercentile, smooth):
 
     # If you want to save the modified data back to a .nii file:
     new_img = nib.Nifti1Image(smoothed_data, img.affine)
-    path = f'../Data/Temp/{fileName}'
+    folder = f'../Data/Temp/{session_id}'
+    os.makedirs(folder, exist_ok=True)
+    path = f'../Data/Temp/{session_id}/{fileName}'
     nib.save(new_img, path)
     return fileName
 
 
-def compute_projection(fileName, min, max, smooth):
+def compute_projection(fileName, min, max, smooth, session_id):
     img = nib.load(f'../Data/Inverted/{fileName}')
     data = img.get_fdata()
     print("here")
@@ -88,7 +91,9 @@ def compute_projection(fileName, min, max, smooth):
     print("here3")
     # If you want to save the modified data back to a .nii file:
     new_img = nib.Nifti1Image(smoothed_data, img.affine)
-    path = f'../Data/Temp/{fileName}'
+    folder = f'../Data/Temp/{session_id}'
+    os.makedirs(folder, exist_ok=True)
+    path = f'../Data/Temp/{session_id}/{fileName}'
     nib.save(new_img, path)
     return fileName
 
