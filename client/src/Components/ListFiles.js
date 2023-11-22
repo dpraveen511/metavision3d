@@ -11,7 +11,7 @@ function ListFiles() {
     const initialRender = useRef(true);
     const [firstRender,setFirstRender] = useState(true);
     const [enableProjection, setEnableProjection] = useState(false);
-    const [removeBoundary, setRemoveBoundary] = useState(false);
+    const [removeBoundary, setRemoveBoundary] = useState(true);
     const [selectedIntensity, setSelectedIntensity] = useState(''); // This won't be editable
     const [minIntensity, setMinIntensity] = useState('');
     const [maxIntensity, setMaxIntensity] = useState('');
