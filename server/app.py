@@ -5,6 +5,7 @@ import mimetypes
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
 from utils import create_boundary, compute_maximum, compute_custome_maximum, invert, compute_projection
+import argparse
 app = Flask(__name__)
 CORS(app)
 
@@ -104,4 +105,8 @@ scheduler.add_job(func=check_files, trigger="interval", minutes=1)
 scheduler.start()
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host="0.0.0.0", port=19290)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=19290)
+    args = parser.parse_args()
+    serve(app, host="0.0.0.0", port=args.port)
+    
