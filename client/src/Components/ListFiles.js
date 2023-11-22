@@ -6,7 +6,7 @@ import '../App.css'
 
 function ListFiles() {
     const [files, setFiles] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null); // State to track the selected file
+    const [selectedFile, setSelectedFile] = useState('PS_36_2__impute_3d.nii.gz'); // State to track the selected file
     const [dropdownOpen, setDropdownOpen] = useState(false); // State for toggling the dropdown
     const initialRender = useRef(true);
     const [firstRender,setFirstRender] = useState(true);
