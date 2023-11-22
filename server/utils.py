@@ -5,7 +5,7 @@ from scipy.ndimage import gaussian_filter
 import os
 
 def create_boundary(fileName):
-    img = nib.load(f'../Data/Inverted/{fileName}')
+    img = nib.load(f'../Data/Original/{fileName}')
     data = img.get_fdata()
     # Create a binary mask of the original data
     binary_mask = data > 0
@@ -27,7 +27,7 @@ def create_boundary(fileName):
     nib.save(boundary_img, path)
 
 def compute_maximum(fileName):
-    img = nib.load(f'../Data/Inverted/{fileName}')
+    img = nib.load(f'../Data/Original/{fileName}')
     data = img.get_fdata()
 
     # Determine the maximum intensity
@@ -53,7 +53,7 @@ def smooth_mask(data, sigma=1):
     return smoothed
 
 def compute_custome_maximum(fileName, maxPercentile, smooth, session_id):
-    img = nib.load(f'../Data/Inverted/{fileName}')
+    img = nib.load(f'../Data/Original/{fileName}')
     data = img.get_fdata()
     print("here")
     # Create a threshold. Here, I'm assuming values within 95% of the max_value.
@@ -79,7 +79,7 @@ def compute_custome_maximum(fileName, maxPercentile, smooth, session_id):
 
 
 def compute_projection(fileName, min, max, smooth, session_id):
-    img = nib.load(f'../Data/Inverted/{fileName}')
+    img = nib.load(f'../Data/Original/{fileName}')
     data = img.get_fdata()
     print("here")
     mask = (data >= float(min)) & (data <= float(max))
