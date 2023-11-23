@@ -208,21 +208,69 @@ function DisplayFile(props) {
         nv1.removeVolumeByUrl(nv1Url)
       }
       setNv1Url(url)
-      nv1.addVolumeFromUrl({url,colormap:"actc"})      
-      //nv1.loadVolumes(volumeList1);
+      // nv1.addVolumeFromUrl({url,colormap:"actc"})      
+      nv1.loadVolumes(volumeList1);
       nv1.setSliceType(nv1.sliceTypeAxial);
-      const cacheBuster = `?_${new Date().getTime()}`;
-      var volumeList2 = [
-          {
-            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
-            Name: 'UE',
-            colormap: "actc",
-            opacity: 0.5,
-            visible: true,     
-            },        
-        ];
-      nv2.loadVolumes(volumeList2);
-      setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
+
+      fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.url) {
+              var volumeList1 = null;
+              if(isBoundaryLoaded && !props.removeBoundary) {
+                setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                console.log("here")
+                 volumeList1 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
+              } else {
+                setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                volumeList1= [
+                  {
+                    url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    colormap: "red",
+                    opacity: 0.9,
+                    visible: true, 
+                  }
+                ];
+              }
+                nv2.loadVolumes(volumeList1);
+                nv2.updateGLVolume();
+            } else {
+                console.error('URL not found in the response');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching the URL:', error);
+        });
+      // const cacheBuster = `?_${new Date().getTime()}`;
+      // var volumeList2 = [
+      //     {
+      //       url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
+      //       Name: 'UE',
+      //       colormap: "actc",
+      //       opacity: 0.5,
+      //       visible: true,     
+      //       },        
+      //   ];
+      // nv2.loadVolumes(volumeList2);
+      // setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
       nv2.setSliceType(nv2.sliceTypeRender);
           
     }
