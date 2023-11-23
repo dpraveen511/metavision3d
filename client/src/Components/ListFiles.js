@@ -217,6 +217,15 @@ function ListFiles() {
             max={maxIntensity}
             session_id = {sessionId}
             ></DisplayFile>
+            <div style={{ textAlign: 'left', paddingLeft: '20px' }}>
+                <Button 
+                    color="warning" 
+                    onClick={() => window.open("https://www.youtube.com/channel/UC5tUZiZHCjS33Un4yxfIWdw ", "_blank")}
+    
+                > 
+                    Click here to open YouTube tutorials
+                </Button>
+            </div>
         </div>
     );
 }
