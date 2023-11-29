@@ -54,3 +54,9 @@
   border-left: 0.5em solid transparent;
   content: "";
 }
+
+.clickable-image:hover {
+  cursor: pointer;
+  box-shadow: 0 0 8px 0 rgba(0, 123, 255, 0.5); /* Bootstrap primary color with opacity */
+  transform: scale(1.05);
+}

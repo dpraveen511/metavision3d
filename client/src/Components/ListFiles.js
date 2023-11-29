@@ -12,11 +12,11 @@ function ListFiles() {
     const initialRender = useRef(true);
     const [firstRender,setFirstRender] = useState(true);
     const [enableProjection, setEnableProjection] = useState(false);
-    const [removeBoundary, setRemoveBoundary] = useState(true);
+    const [removeBoundary, setRemoveBoundary] = useState(false);
     const [selectedIntensity, setSelectedIntensity] = useState(''); // This won't be editable
     const [minIntensity, setMinIntensity] = useState('');
     const [maxIntensity, setMaxIntensity] = useState('');
-    const [maxIntensityPercentile, setMaxIntensityPercentile] = useState('95');
+    const [maxIntensityPercentile, setMaxIntensityPercentile] = useState('99');
     const [smoothness, setSmoothness] = useState(0);
     const [runClicked, setRunClicked] = useState(false);
     const [projectClicked, setProjectClicked] = useState(false);
@@ -228,14 +228,7 @@ function ListFiles() {
                     <i className="bi bi-youtube"></i> Click here to open YouTube tutorials
                 </Button>
             </div>
-            <div style={{  textAlign: 'left',paddingLeft: '50px',paddingTop:'1px' }}>
-                <Button 
-                    color="warning" 
-                    onClick={() => window.open(" https://www.imaging-metabolomics.com/", "_blank")}
-                > 
-                <img src={logo} alt="Sun's Lab" style={{ width: '15px',height:'15px',marginRight: '8px' }}/> Go to Sun's Lab
-                </Button>
-            </div>
+            
             </div>
         </div>
     );

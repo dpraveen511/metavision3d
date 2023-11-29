@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../Images/SUNLab_Logo.webp';
+import '../App.css'
 
 function Header() {
     return (
@@ -8,8 +9,9 @@ function Header() {
                 <img
                     alt="Sun Lab"
                     src={logo}
+                    onClick={() => window.open(" https://www.imaging-metabolomics.com/", "_blank")}
                      // Adjust to keep the image's aspect ratio
-                    className="d-inline-block align-top"
+                    className="d-inline-block align-top clickable-image"
                 />
                 <span style={{ fontSize: '42px', marginLeft: '10px' }}>Spatial Metabolomics Atlas of the 3D Brain</span>
             </a>
