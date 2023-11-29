@@ -3,10 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import DisplayFile from './DisplayFile.js';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Input, Label, FormGroup} from 'reactstrap';
 import '../App.css'
+import logo from '../Images/SUNLab_Logo.webp';
 
 function ListFiles() {
     const [files, setFiles] = useState([]);
-    const [selectedFile, setSelectedFile] = useState('PS_36_2__impute_3d.nii.gz'); // State to track the selected file
+    const [selectedFile, setSelectedFile] = useState('PI_38_5__impute_3d.nii.gz'); // State to track the selected file
     const [dropdownOpen, setDropdownOpen] = useState(false); // State for toggling the dropdown
     const initialRender = useRef(true);
     const [firstRender,setFirstRender] = useState(true);
@@ -15,7 +16,7 @@ function ListFiles() {
     const [selectedIntensity, setSelectedIntensity] = useState(''); // This won't be editable
     const [minIntensity, setMinIntensity] = useState('');
     const [maxIntensity, setMaxIntensity] = useState('');
-    const [maxIntensityPercentile, setMaxIntensityPercentile] = useState('99');
+    const [maxIntensityPercentile, setMaxIntensityPercentile] = useState('95');
     const [smoothness, setSmoothness] = useState(0);
     const [runClicked, setRunClicked] = useState(false);
     const [projectClicked, setProjectClicked] = useState(false);
@@ -217,6 +218,7 @@ function ListFiles() {
             max={maxIntensity}
             session_id = {sessionId}
             ></DisplayFile>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ textAlign: 'left', paddingLeft: '20px' }}>
                 <Button 
                     color="warning" 
@@ -225,6 +227,15 @@ function ListFiles() {
                 > 
                     <i className="bi bi-youtube"></i> Click here to open YouTube tutorials
                 </Button>
+            </div>
+            <div style={{  textAlign: 'left',paddingLeft: '50px',paddingTop:'1px' }}>
+                <Button 
+                    color="warning" 
+                    onClick={() => window.open(" https://www.imaging-metabolomics.com/", "_blank")}
+                > 
+                <img src={logo} alt="Sun's Lab" style={{ width: '15px',height:'15px',marginRight: '8px' }}/> Go to Sun's Lab
+                </Button>
+            </div>
             </div>
         </div>
     );
