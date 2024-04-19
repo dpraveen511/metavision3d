@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between rows */
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    border: 25px solid black; /* Boundary box around each row */
+    padding: 10px;
+}
+
+.header {
+    margin-right: 20px; /* Space between header and canvases */
+    font-size: 20px;
+    font-weight: bold;
+    /* flex-shrink: 0; Prevent the header from shrinking */
+}
+
+.canvas-container {
+    display: flex;
+    gap: 20px; /* Space between canvases */
+    flex-grow: 1; /* Allow canvas container to fill space */
+}
+
+canvas {
+    flex: 1 1 400px; /* Flex grow, shrink and basis */
+    border: 1px solid #ccc; /* Optional: border around each canvas */
+}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect,useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import DisplayFile from './DisplayFile.js';
+import DisplayAlzemiersFile from './DisplayAlzemiersFile.js';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Input, Label, FormGroup} from 'reactstrap';
 import '../App.css'
 import logo from '../Images/SUNLab_Logo.webp';
 
-function ListFiles() {
+function ListAlzemiersFiles() {
     const [files, setFiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState('PI_38_5__impute_3d.nii.gz'); // State to track the selected file
     const [dropdownOpen, setDropdownOpen] = useState(false); // State for toggling the dropdown
@@ -206,7 +206,7 @@ function ListFiles() {
             </div>
             
             {/* Display the selected file */}
-            <DisplayFile fileName={selectedFile} smooth={smoothness}
+            <DisplayAlzemiersFile fileName={selectedFile} smooth={smoothness}
             maxPercentile={maxIntensityPercentile} 
             runClicked={runClicked} 
             removeBoundary={removeBoundary} 
@@ -217,7 +217,7 @@ function ListFiles() {
             min={minIntensity}
             max={maxIntensity}
             session_id = {sessionId}
-            ></DisplayFile>
+            ></DisplayAlzemiersFile>
             {/* <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ textAlign: 'left', paddingLeft: '20px' }}>
                 <Button 
@@ -230,7 +230,7 @@ function ListFiles() {
             </div>
             
             </div> */}
-            <hr></hr>
+            {/* <hr></hr>
             <div class="container my-4">
             <div class="row">
         <div class="col-12">
@@ -251,9 +251,9 @@ function ListFiles() {
                 </div>
             </div>
         </div>
-    </div>
+    </div> */}
         </div>
     );
 }
 
-export default ListFiles;
+export default ListAlzemiersFiles;

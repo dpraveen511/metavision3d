@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {Niivue,NVImage} from '@niivue/niivue';
-function DisplayFile(props) {
+import { Container } from 'reactstrap';
+function DisplayPompeFile(props) {
 
   const [isBoundaryLoaded,setBoundaryLoaded] = useState(true);
   const [initialRender,setInitialRender] = useState(true);
   const [nv1,setNv1] = useState(new Niivue({onLocationChange: handleIntensityChange,}))
   const [nv2,setNv2] = useState(new Niivue())
+  const [nv3,setNv3] = useState(new Niivue({onLocationChange: handleIntensityChange,}))
+  const [nv4,setNv4] = useState(new Niivue())
   const[nv2MainUrl,setNv2MainUrl] = useState('')
   const[nv1Url,setNv1Url] = useState(null)
 
@@ -162,6 +165,8 @@ function DisplayFile(props) {
   useEffect(() => {
     nv1.attachTo("gl1");
     nv2.attachTo("gl2");
+    nv3.attachTo("gl3");
+    nv4.attachTo("gl4");
     // nv2.setScale(4);
     // nv2.setClipPlane([270,-90])
     nv1.opts.isColorbar = true;
@@ -211,6 +216,8 @@ function DisplayFile(props) {
       // nv1.addVolumeFromUrl({url,colormap:"actc"})      
       nv1.loadVolumes(volumeList1);
       nv1.setSliceType(nv1.sliceTypeAxial);
+      nv3.loadVolumes(volumeList1);
+      nv3.setSliceType(nv1.sliceTypeAxial);
 
       fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
@@ -252,6 +259,8 @@ function DisplayFile(props) {
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
+                nv4.loadVolumes(volumeList1);
+                nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
             }
@@ -271,25 +280,42 @@ function DisplayFile(props) {
       //   ];
       // nv2.loadVolumes(volumeList2);
       // setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
-      nv2.setSliceType(nv2.sliceTypeRender);
+      nv2.setSliceType(nv2.sliceTypeRender)
+      nv4.setSliceType(nv2.sliceTypeRender);
           
     }
   }, [props.fileName]);
 
   
   return (
-      <div className="p-2 d-flex" >
-        
-          <div id="demo1" className="p-2" style={{ height: '400px',width:'49%'}}>
-              <canvas id="gl1" style={{width: '500px', height: '400px'}}> </canvas>
+    <div className = "container ">
+      <div className="row ">
+      <div class="header">Normal Brain</div>
+      
+          <div id="demo1" className="p-2" style={{ height: '300px',width:'49%'}}>
+              <canvas id="gl1" style={{width: '400px', height:'350px'}}> </canvas>
           </div>
           <div style={{width: '25px',backgroundColor:'white'}}></div>
-          <div id="demo2" className="p-2" style={{ left:'70%',height: '400px',width:'49%',}}>
+          <div id="demo2" className="p-2" style={{ left:'70%',height: '300px',width:'49%',}}>
               <canvas id="gl2" style={{width: '400px', height: '400px'}}> </canvas>
           </div>
+          
+      </div>
+      <div className="row">
+      <div class="header">Diseased Brain</div>
+      
+          <div id="demo3" className="p-2" style={{ height: '300px',width:'45%'}}>
+              <canvas id="gl3" style={{width: '500px', height: '400px'}}> </canvas>
+          </div>
+          <div style={{width: '25px',backgroundColor:'white'}}></div>
+          <div id="demo4" className="p-2" style={{ left:'70%',height: '300px',width:'45%',}}>
+              <canvas id="gl4" style={{width: '400px', height: '400px'}}> </canvas>
+          </div>
+          
+      </div>
       </div>
       
   );
 }
 
-export default DisplayFile
+export default DisplayPompeFile

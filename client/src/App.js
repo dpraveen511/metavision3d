@@ -1,16 +1,22 @@
 import logo from './Images/SUNLab_Logo.webp';
 import './App.css';
 import Header from './Components/Header.js'
-import ListFiles from './Components/ListFiles.js';
+import MenuBar from './Components/MenuBar.js';
+import ListNormalFiles from './Components/ListNormalFiles.js';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ActiveLinkProvider } from './Components/ActiveLinkContext.js';
 
 function App() {
   return (
     
-    <div className="App">
-      <Header/>
-      <ListFiles></ListFiles>
-    </div>
+    <Router>
+      <ActiveLinkProvider>
+        <div className="App">
+          <Header />
+          <MenuBar />
+        </div>
+      </ActiveLinkProvider>
+    </Router>
     
   );
 }
