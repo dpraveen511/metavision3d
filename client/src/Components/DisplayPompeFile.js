@@ -170,6 +170,7 @@ function DisplayPompeFile(props) {
     // nv2.setScale(4);
     // nv2.setClipPlane([270,-90])
     nv1.opts.isColorbar = true;
+    nv3.opts.isColorbar = true;
     setInitialRender(!initialRender);
     }, []);
 
@@ -288,31 +289,34 @@ function DisplayPompeFile(props) {
 
   
   return (
-    <div className = "container ">
+    <div class = "container ">
+      <div class = "row"><div class="col"><hr style={{border:'none',height:'2px', backgroundColor:'black'}}/></div></div>
       <div className="row ">
-      <div class="header">Normal Brain</div>
+      <div class="col-1 " style={{fontSize:'24px', fontWeight:'bold',marginRight:'14px'}}>Normal Brain</div>
       
-          <div id="demo1" className="p-2" style={{ height: '300px',width:'49%'}}>
-              <canvas id="gl1" style={{width: '400px', height:'350px'}}> </canvas>
+          <div id="demo1" className="col-5 p-2" style={{ height: '300px'}}>
+              <canvas id="gl1" style={{width: '500px', height: '400px'}}> </canvas>
           </div>
-          <div style={{width: '25px',backgroundColor:'white'}}></div>
-          <div id="demo2" className="p-2" style={{ left:'70%',height: '300px',width:'49%',}}>
+          <div class= "col-1" style={{width: '25px',backgroundColor:'white'}}></div>
+          <div id="demo2" className="col-5 p-2" style={{ left:'70%',height: '300px'}}>
               <canvas id="gl2" style={{width: '400px', height: '400px'}}> </canvas>
           </div>
           
       </div>
+      <div class = "row"><div class="col"><hr style={{border:'none',height:'1px', backgroundColor:'black'}}/></div></div>
       <div className="row">
-      <div class="header">Diseased Brain</div>
+      <div class="col-1 " style={{fontSize:'24px', fontWeight:'bold',marginRight:'14px'}}>Diseased Brain</div>
       
-          <div id="demo3" className="p-2" style={{ height: '300px',width:'45%'}}>
-              <canvas id="gl3" style={{width: '500px', height: '400px'}}> </canvas>
+          <div id="demo3" className="col-5 p-2" style={{ height: '300px'}}>
+              <canvas id="gl3" style={{ height: '400px'}}> </canvas>
           </div>
-          <div style={{width: '25px',backgroundColor:'white'}}></div>
-          <div id="demo4" className="p-2" style={{ left:'70%',height: '300px',width:'45%',}}>
+          <div class ="col-1" style={{width: '25px',backgroundColor:'white'}}></div>
+          <div id="demo4" className="col-5 p-2" style={{ left:'70%',height: '300px'}}>
               <canvas id="gl4" style={{width: '400px', height: '400px'}}> </canvas>
           </div>
           
       </div>
+      <div class = "row"><div class="col"><hr style={{border:'none',height:'2px', backgroundColor:'black'}}/></div></div>
       </div>
       
   );

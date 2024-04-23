@@ -5,14 +5,14 @@ import Tutorials from './Tutorials';
 import ListNormalFiles from './ListNormalFiles';
 import ListAlzemiersFiles from './ListAlzemiersFiles';
 import ListPompeFiles from './ListpPompeFiles';
-import { useActiveLink } from './ActiveLinkContext';
+// import { useActiveLink } from './ActiveLinkContext';
 function MenuBar(){
     const navigate = useNavigate();
-    const {activeLink, setActiveLink} = useActiveLink();//useActiveLink();//useState('Normal');
+    const [activeLink, setActiveLink] = useState('Normal');
 
     const handleNavLinkClick = (linkName) => {
         setActiveLink(linkName);
-        navigate('/' + linkName.toLowerCase());
+        // navigate('/' + linkName.toLowerCase());
     };
     const navItems = ['Normal', 'Alzheimers', 'Another', 'Tutorials'];
     const NormalPage = () => <ListNormalFiles></ListNormalFiles>;
@@ -29,7 +29,7 @@ function MenuBar(){
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ">
-                <Link className={`nav-item nav-link ${activeLink === 'Normal' ? 'active' : ''}`} to="/normal" onClick={() => handleNavLinkClick('Normal')}>Normal</Link>
+                <Link className={`nav-item nav-link ${activeLink === 'Normal' ? 'active' : ''}`} to="/" onClick={() => handleNavLinkClick('Normal')}>Normal</Link>
                 <Link className={`nav-item nav-link ${activeLink === 'Alzheimers' ? 'active' : ''}`} to="/alzheimers" onClick={() => handleNavLinkClick('Alzheimers')}>Alzheimers</Link>
                 <Link className={`nav-item nav-link ${activeLink === 'Pompe' ? 'active' : ''}`} to="/pompe" onClick={() => handleNavLinkClick('Pompe')}>Pompe</Link>
                 <Link className={`nav-item nav-link ${activeLink === 'Tutorials' ? 'active' : ''}`} to="/tutorials" onClick={() => handleNavLinkClick('Tutorials')}>Tutorials</Link>
@@ -39,7 +39,7 @@ function MenuBar(){
         </nav>
         </div>
         <Routes>
-                <Route path="/normal" element={<ListNormalFiles />} />
+                <Route path="/" element={<ListNormalFiles />} />
                 <Route path="/alzheimers" element={<ListAlzemiersFiles />} />
                 <Route path="/pompe" element={<ListPompeFiles />} />
                 <Route path="/tutorials" element={<Tutorials />} />

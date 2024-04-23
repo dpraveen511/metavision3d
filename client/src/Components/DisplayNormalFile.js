@@ -278,16 +278,22 @@ function DisplayNormalFile(props) {
 
   
   return (
-      <div className="p-2 d-flex" >
+    <div class = "container ">
+    <div class = "row"><div class="col"><hr style={{border:'none',height:'5px', backgroundColor:'black'}}/></div></div>
+    <div className="row ">
+    <div class="col-1 " style={{fontSize:'24px', fontWeight:'bold',marginRight:'14px'}}>Normal Brain</div>
+    
+        <div id="demo1" className="col-5 p-2" style={{ height: '300px'}}>
+            <canvas id="gl1" style={{width: '500px', height: '400px'}}> </canvas>
+        </div>
+        <div class= "col-1" style={{width: '25px',backgroundColor:'white'}}></div>
+        <div id="demo2" className="col-5 p-2" style={{ left:'70%',height: '300px'}}>
+            <canvas id="gl2" style={{width: '400px', height: '400px'}}> </canvas>
+        </div>
         
-          <div id="demo1" className="p-2" style={{ height: '400px',width:'49%'}}>
-              <canvas id="gl1" style={{width: '500px', height: '400px'}}> </canvas>
-          </div>
-          <div style={{width: '25px',backgroundColor:'white'}}></div>
-          <div id="demo2" className="p-2" style={{ left:'70%',height: '400px',width:'49%',}}>
-              <canvas id="gl2" style={{width: '400px', height: '400px'}}> </canvas>
-          </div>
-      </div>
+    </div>
+    <div class = "row"><div class="col"><hr style={{border:'none',height:'5px', backgroundColor:'black'}}/></div></div>
+    </div>
       
   );
 }

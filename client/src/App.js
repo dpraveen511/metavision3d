@@ -10,12 +10,12 @@ function App() {
   return (
     
     <Router>
-      <ActiveLinkProvider>
-        <div className="App">
+      
+        <div >
           <Header />
           <MenuBar />
         </div>
-      </ActiveLinkProvider>
+      
     </Router>
     
   );
