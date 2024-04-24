@@ -16,7 +16,13 @@ def greeting():
 @app.route('/listfiles')
 def list_files():
     try:
-        files = [f for f in os.listdir('../Data/Original') if not f.startswith('.')] 
+        disease = request.args.get('disease')
+        if disease == "Alzhemier":
+            files = [f for f in os.listdir('../Data/Alzhemier/Normal/Original') if not f.startswith('.')]
+        elif disease == "Pompe":
+            files = [f for f in os.listdir('../Data/Pompe/Normal/Original') if not f.startswith('.')]
+        else:
+            files = [f for f in os.listdir('../Data/Original') if not f.startswith('.')] 
         # mime_type, _ = mimetypes.guess_type('.Images/ColumnMajorOrder.gii')
         print("here")
         # print(f"MIME type of column: {mime_type}")

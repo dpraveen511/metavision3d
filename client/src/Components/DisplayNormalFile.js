@@ -279,7 +279,7 @@ function DisplayNormalFile(props) {
   
   return (
     <div class = "container ">
-    <div class = "row"><div class="col"><hr style={{border:'none',height:'5px', backgroundColor:'black'}}/></div></div>
+    <div class = "row"><div class="col"><hr style={{border:'none',height:'2px', backgroundColor:'black'}}/></div></div>
     <div className="row ">
     <div class="col-1 " style={{fontSize:'24px', fontWeight:'bold',marginRight:'14px'}}>Normal Brain</div>
     
@@ -292,7 +292,7 @@ function DisplayNormalFile(props) {
         </div>
         
     </div>
-    <div class = "row"><div class="col"><hr style={{border:'none',height:'5px', backgroundColor:'black'}}/></div></div>
+    {/* <div class = "row"><div class="col"><hr style={{border:'none',height:'5px', backgroundColor:'black'}}/></div></div> */}
     </div>
       
   );
