@@ -85,8 +85,8 @@ def smooth_mask(data, sigma=1):
 
 def compute_custome_maximum(fileName, maxPercentile, smooth, session_id,disease):
     if(disease is not None):
-        img1 = nib.load(f'../Data/{disease}/Normal/{fileName}')
-        img2 = nib.load(f'../Data/{disease}/Disease/{fileName}')  
+        img1 = nib.load(f'../Data/{disease}/Normal/Original/{fileName}')
+        img2 = nib.load(f'../Data/{disease}/Disease/Original/{fileName}')  
         data1 = img1.get_fdata()
         data2 = img2.get_fdata()
         threshold = np.percentile(data, float(maxPercentile))
