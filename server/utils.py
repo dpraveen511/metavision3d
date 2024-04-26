@@ -89,9 +89,10 @@ def compute_custome_maximum(fileName, maxPercentile, smooth, session_id,disease)
         img2 = nib.load(f'../Data/{disease}/Disease/Original/{fileName}')  
         data1 = img1.get_fdata()
         data2 = img2.get_fdata()
-        threshold = np.percentile(data, float(maxPercentile))
-        mask1 = data1 < threshold
-        mask2 = data2 < threshold
+        threshold1 = np.percentile(data1, float(maxPercentile))
+        threshold2 = np.percentile(data2, float(maxPercentile))
+        mask1 = data1 < threshold1
+        mask2 = data2 < threshold2
         data1[mask1] = 0
         data2[mask2] = 0
         data1[~mask1] = 1
@@ -138,13 +139,13 @@ def compute_custome_maximum(fileName, maxPercentile, smooth, session_id,disease)
 
 def compute_projection(fileName, min, max, smooth, session_id,disease):
     if disease is not None:
-        img1 = nib.load(f'../Data/{disease}/Normal/{fileName}')
-        img2 = nib.load(f'../Data/{disease}/Disease/{fileName}')
+        img1 = nib.load(f'../Data/{disease}/Normal/Original/{fileName}')
+        img2 = nib.load(f'../Data/{disease}/Disease/Original/{fileName}')
         data1 = img1.get_fdata()
         data2 = img2.get_fdata()
         # print("here")
-        mask1 = (data1 >= float(min)) & (data <= float(max))
-        mask2 = (data2 >= float(min)) & (data <= float(max))
+        mask1 = (data1 >= float(min)) & (data1 <= float(max))
+        mask2 = (data2 >= float(min)) & (data2 <= float(max))
         print("here2")
         # Set those values to 0
         data1[mask1] = 1
