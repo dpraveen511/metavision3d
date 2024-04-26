@@ -39,11 +39,12 @@ def calc_custom_max():
     maxPercentile = request.args.get('max')
     session_id = request.args.get('session_id')
     base_url = request.args.get('url')
+    disease = request.args.get('disease')
     print(file_name)
     try:
-        result = compute_custome_maximum(file_name, maxPercentile, smooth, session_id)
+        result = compute_custome_maximum(file_name, maxPercentile, smooth, session_id,disease)
         print("custom max projection got computed")
-        return jsonify({"url": f'{base_url}/data/Temp/{session_id}/{result}'})
+        return jsonify({"url": f'{base_url}/data/Temp/{session_id}/{result}',"urld": f'{base_url}/data/Temp/{session_id}/disease_{result}'})
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500     
@@ -57,11 +58,12 @@ def calc_projection():
     min = request.args.get('min')
     session_id = request.args.get('session_id')
     base_url = request.args.get('url')
+    disease = request.args.get('disease')
     print(file_name)
     try:
-        result = compute_projection(file_name, min, max, smooth, session_id)
+        result = compute_projection(file_name, min, max, smooth, session_id,disease)
         print("custom max projection got computed")
-        return jsonify({"url": f'{base_url}/data/Temp/{session_id}/{result}'})
+        return jsonify({"url": f'{base_url}/data/Temp/{session_id}/{result}',"urld": f'{base_url}/data/Temp/{session_id}/disease_{result}'})
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500 
@@ -71,36 +73,77 @@ def check_files():
     print("checkfile scheduler is running")
     folderA = '../Data/Original'
     folderB = '../Data/Boundary'
-    folderC = '../Data/Maximum'
-    folderD = '../Data/Inverted'
+    folderC = '../Data/Inverted'
+    alz_folderA = '../Data/Alzhemier/Normal/Original'
+    alz_folderB = '../Data/Alzhemier/Normal/Boundary'
+    alz_folderC = '../Data/Alzhemier/Normal/Inverted'
+    pom_folderA = '../Data/Pompe/Normal/Original'
+    pom_folderB = '../Data/Pompe/Normal/Boundary'
+    pom_folderC = '../Data/Pompe/Normal/Inverted'
     try:
         filesA = set(os.listdir(folderA))
         filesB = set(os.listdir(folderB))
         filesC = set(os.listdir(folderC))
-        filesD = set(os.listdir(folderD))
+
         
         missing_filesAB = filesA - filesB
         missing_filesAC = filesA - filesC
-        missing_filesAD = filesA - filesD
         
-        if missing_filesAD:
+        if missing_filesAC:
             for missing_file in missing_filesAD:
                 print("creating inverted file  for :",missing_file)
-                invert(missing_file)
+                invert(missing_file,None)
         else:
             print("All files from Original are present in Inverted.")
         if missing_filesAB:
             for missing_file in missing_filesAB:
                 print("computing boundary for:", missing_file)
-                create_boundary(missing_file)
+                create_boundary(missing_file,None)
         else:
             print("All files from Orignal are present in Boundary.")
-        # if missing_filesAC:
-        #     for missing_file in missing_filesAD:
-        #         print("computing maximum for:", missing_file)
-        #         invert(missing_file)
-        # else:
-        #     print("All files from FolderA are present in FolderC.")
+        ##################################################################
+        filesA = set(os.listdir(alz_folderA))
+        filesB = set(os.listdir(alz_folderB))
+        filesC = set(os.listdir(alz_folderC))
+
+        
+        missing_filesAB = filesA - filesB
+        missing_filesAC = filesA - filesC
+        
+        if missing_filesAC:
+            for missing_file in missing_filesAD:
+                print("creating inverted file  for :",missing_file)
+                invert(missing_file,"Alzhemier")
+        else:
+            print("All files from Original are present in Inverted.")
+        if missing_filesAB:
+            for missing_file in missing_filesAB:
+                print("computing boundary for:", missing_file)
+                create_boundary(missing_file,"Alzhemier")
+        else:
+            print("All files from Alzhmier are present in Boundary.")
+        ##################################################################
+        filesA = set(os.listdir(pom_folderA))
+        filesB = set(os.listdir(pom_folderB))
+        filesC = set(os.listdir(pom_folderC))
+
+        
+        missing_filesAB = filesA - filesB
+        missing_filesAC = filesA - filesC
+        
+        if missing_filesAC:
+            for missing_file in missing_filesAD:
+                print("creating inverted file  for :",missing_file)
+                invert(missing_file,"Pompe")
+        else:
+            print("All files from Original are present in Inverted.")
+        if missing_filesAB:
+            for missing_file in missing_filesAB:
+                print("computing boundary for:", missing_file)
+                create_boundary(missing_file,"Pompe")
+        else:
+            print("All files from Pompe are present in Boundary.")
+      
         
     except Exception as e:
         print(f"Error checking files: {str(e)}")

@@ -11,11 +11,13 @@ function DisplayPompeFile(props) {
   const [nv4,setNv4] = useState(new Niivue())
   const[nv2MainUrl,setNv2MainUrl] = useState('')
   const[nv1Url,setNv1Url] = useState(null)
+  const[nv4MainUrl,setNv4MainUrl] = useState('')
+  const[nv3Url,setNv3Url] = useState(null)
 
   function runMaxProjection(){
     console.log("I ran");
     console.log(`http://localhost:3001/Inverted/${props.fileName}`)
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?disease=Pompe&fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -25,12 +27,14 @@ function DisplayPompeFile(props) {
         .then(data => {
             if (data.url) {
               var volumeList1 = null;
+              var volumeList2 = null;
               if(isBoundaryLoaded && !props.removeBoundary) {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -42,8 +46,23 @@ function DisplayPompeFile(props) {
                         visible: true,
                     }
                 ];
+                volumeList2 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
               } else {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 volumeList1= [
                   {
                     url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
@@ -52,9 +71,19 @@ function DisplayPompeFile(props) {
                     visible: true, 
                   }
                 ];
+                volumeList2= [
+                  {
+                    url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    colormap: "red",
+                    opacity: 0.9,
+                    visible: true, 
+                  }
+                ];
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
+                nv4.loadVolumes(volumeList2);
+                nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
             }
@@ -68,7 +97,7 @@ function DisplayPompeFile(props) {
 
   function runProjection(){
     console.log("Running Projection");
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?disease=Pompe&fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,12 +107,14 @@ function DisplayPompeFile(props) {
         .then(data => {
             if (data.url) {
               var volumeList1 = null;
+              var volumeList2 = null;
               if(isBoundaryLoaded && !props.removeBoundary) {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -95,11 +126,26 @@ function DisplayPompeFile(props) {
                         visible: true,
                     }
                 ];
+                volumeList2 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
               } else {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 volumeList1= [
                   {
-                    url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
                     colormap: "red",
                     opacity: 0.9,
                     visible: true, 
@@ -108,6 +154,8 @@ function DisplayPompeFile(props) {
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
+                nv4.loadVolumes(volumeList2);
+                nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
             }
@@ -116,7 +164,6 @@ function DisplayPompeFile(props) {
             console.error('Error fetching the URL:', error);
         });
   }
-
 
   function handleIntensityChange(data) {
     console.log(data.values[0].value);
@@ -139,13 +186,22 @@ function DisplayPompeFile(props) {
         visible: true, 
       }
     ];
+    var volumes1 = [
+      {
+        url: nv4MainUrl, // use the URL from the response
+        colormap: "red",
+        opacity: 0.9,
+        visible: true, 
+      }
+    ];
     console.log(volumes)
     nv2.loadVolumes(volumes);
+    nv4.loadVolumes(volumes1)
   } else if(!initialRender){
     console.log("Printing at the start of renderning")
     var volumeList1 = [
       {
-        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Boundary/${props.fileName}`, // use the URL from the response
         colormap: "gray",
         opacity: 0.2,
         visible: true,
@@ -157,7 +213,22 @@ function DisplayPompeFile(props) {
             visible: true,
         }
     ];
+    var volumeList2 = [
+      {
+        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Boundary/${props.fileName}`, // use the URL from the response
+        colormap: "gray",
+        opacity: 0.2,
+        visible: true,
+    },
+        {
+            url: nv4MainUrl, // use the URL from the response
+            colormap: "red",
+            opacity: 0.9,
+            visible: true,
+        }
+    ];
     nv2.loadVolumes(volumeList1);
+    nv4.loadVolumes(volumeList2);
   }
   },[props.removeBoundary])
 
@@ -191,101 +262,137 @@ function DisplayPompeFile(props) {
     }, [props.projectClicked]);
   
       
-  useEffect(() => {
-    if (props.fileName) {
-      var volumeList1 = [
-          {
-            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
-            colormap: "actc",
-            opacity: 1,
-            visible: true,   
-          }  
-        ];
-          
-      nv1.onImageLoaded = function(volume){
-        console.log('volume loaded');
-      }
-      var url = `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`
-      console.log(url);
-      if(nv1Url === null){
-        console.log("nv1 is already loaded")
-      }
-      else{
-        nv1.removeVolumeByUrl(nv1Url)
-      }
-      setNv1Url(url)
-      // nv1.addVolumeFromUrl({url,colormap:"actc"})      
-      nv1.loadVolumes(volumeList1);
-      nv1.setSliceType(nv1.sliceTypeAxial);
-      nv3.loadVolumes(volumeList1);
-      nv3.setSliceType(nv1.sliceTypeAxial);
-
-      fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.url) {
-              var volumeList1 = null;
-              if(isBoundaryLoaded && !props.removeBoundary) {
-                setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
-                console.log("here")
-                 volumeList1 = [
-                  {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
-                    colormap: "gray",
-                    opacity: 0.25,
-                    visible: true,
-                },
-                    {
-                        url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
-                        colormap: "red",
-                        opacity: 0.9,
-                        visible: true,
-                    }
-                ];
-              } else {
-                setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
-                volumeList1= [
-                  {
-                    url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
-                    colormap: "red",
-                    opacity: 0.9,
-                    visible: true, 
-                  }
-                ];
+    useEffect(() => {
+      if (props.fileName) {
+        var volumeList1 = [
+            {
+              url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Inverted/${props.fileName}`,
+              colormap: "actc",
+              opacity: 1,
+              visible: true,   
+            }  
+          ];
+          var volumeList2 = [
+            {
+              url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Inverted/${props.fileName}`,
+              colormap: "actc",
+              opacity: 1,
+              visible: true,   
+            }  
+          ];
+            
+        nv1.onImageLoaded = function(volume){
+          console.log('volume loaded');
+        }
+        var url = `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Inverted/${props.fileName}`
+        var url1 = `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Inverted/${props.fileName}`
+        console.log(url);
+        if(nv1Url === null){
+          console.log("nv1 is already loaded")
+        }
+        else{
+          nv1.removeVolumeByUrl(nv1Url)
+          nv3.removeVolumeByUrl(nv3Url)
+        }
+        setNv1Url(url)
+        setNv3Url(url1)
+        // nv1.addVolumeFromUrl({url,colormap:"actc"})      
+        nv1.loadVolumes(volumeList1);
+        nv1.setSliceType(nv1.sliceTypeAxial);
+        nv3.loadVolumes(volumeList2);
+        nv3.setSliceType(nv1.sliceTypeAxial);
+  
+        fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?disease=Pompe&fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
               }
-                nv2.loadVolumes(volumeList1);
-                nv2.updateGLVolume();
-                nv4.loadVolumes(volumeList1);
-                nv4.updateGLVolume();
-            } else {
-                console.error('URL not found in the response');
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching the URL:', error);
-        });
-      // const cacheBuster = `?_${new Date().getTime()}`;
-      // var volumeList2 = [
-      //     {
-      //       url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
-      //       Name: 'UE',
-      //       colormap: "actc",
-      //       opacity: 0.5,
-      //       visible: true,     
-      //       },        
-      //   ];
-      // nv2.loadVolumes(volumeList2);
-      // setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
-      nv2.setSliceType(nv2.sliceTypeRender)
-      nv4.setSliceType(nv2.sliceTypeRender);
-          
-    }
-  }, [props.fileName]);
+              return response.json();
+          })
+          .then(data => {
+              if (data.url) {
+                var volumeList1 = null;
+                var volumeList2 = null;
+                if(isBoundaryLoaded && !props.removeBoundary) {
+                  setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                  setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
+                  console.log("here")
+                   volumeList1 = [
+                    {
+                      url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Boundary/${props.fileName}`, // use the URL from the response
+                      colormap: "gray",
+                      opacity: 0.25,
+                      visible: true,
+                  },
+                      {
+                          url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                          colormap: "red",
+                          opacity: 0.9,
+                          visible: true,
+                      }
+                  ];
+                  volumeList2 = [
+                    {
+                      url: `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                      colormap: "gray",
+                      opacity: 0.25,
+                      visible: true,
+                  },
+                      {
+                          url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                          colormap: "red",
+                          opacity: 0.9,
+                          visible: true,
+                      }
+                  ];
+                } else {
+                  setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                  setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
+                  volumeList1= [
+                    {
+                      url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                      colormap: "red",
+                      opacity: 0.9,
+                      visible: true, 
+                    }
+                  ];
+                  volumeList2= [
+                    {
+                      url: data.urld+ `?nocache=${new Date().getTime()}`, // use the URL from the response
+                      colormap: "red",
+                      opacity: 0.9,
+                      visible: true, 
+                    }
+                  ];
+                }
+                  nv2.loadVolumes(volumeList1);
+                  nv2.updateGLVolume();
+                  nv4.loadVolumes(volumeList2);
+                  nv4.updateGLVolume();
+              } else {
+                  console.error('URL not found in the response');
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching the URL:', error);
+          });
+        // const cacheBuster = `?_${new Date().getTime()}`;
+        // var volumeList2 = [
+        //     {
+        //       url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
+        //       Name: 'UE',
+        //       colormap: "actc",
+        //       opacity: 0.5,
+        //       visible: true,     
+        //       },        
+        //   ];
+        // nv2.loadVolumes(volumeList2);
+        // setNv2MainUrl(`${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`)
+        nv2.setSliceType(nv2.sliceTypeRender)
+        nv4.setSliceType(nv2.sliceTypeRender);
+            
+      }
+    }, [props.fileName]);
 
   
   return (

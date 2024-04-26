@@ -64,7 +64,7 @@ function ListPompeFiles() {
         }
         setSessionId(getCookie(sessionName));
 
-        fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/listfiles`)
+        fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/listfiles?disease=Alzhemier`)
             .then(response => response.json())
             .then(data => {
                 setFiles(data.files);
@@ -90,7 +90,7 @@ function ListPompeFiles() {
         }
     
         // Define the URL where the file is being served
-        const fileURL = `${process.env.REACT_APP_FLASK_API_URL}/data/Original/${selectedFile}`;
+        const fileURL = `${process.env.REACT_APP_FLASK_API_URL}/data/Pompe/Normal/Original/${selectedFile}`;
     
         // Create a link and trigger the download
         const link = document.createElement("a");

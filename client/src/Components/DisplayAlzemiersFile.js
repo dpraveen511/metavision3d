@@ -11,11 +11,13 @@ function DisplayAlzemiersFile(props) {
   const [nv4,setNv4] = useState(new Niivue())
   const[nv2MainUrl,setNv2MainUrl] = useState('')
   const[nv1Url,setNv1Url] = useState(null)
+  const[nv4MainUrl,setNv4MainUrl] = useState('')
+  const[nv3Url,setNv3Url] = useState(null)
 
   function runMaxProjection(){
     console.log("I ran");
     console.log(`http://localhost:3001/Inverted/${props.fileName}`)
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?disease=Alzhemier&fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -25,12 +27,14 @@ function DisplayAlzemiersFile(props) {
         .then(data => {
             if (data.url) {
               var volumeList1 = null;
+              var volumeList2 = null;
               if(isBoundaryLoaded && !props.removeBoundary) {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -42,8 +46,23 @@ function DisplayAlzemiersFile(props) {
                         visible: true,
                     }
                 ];
+                volumeList2 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
               } else {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 volumeList1= [
                   {
                     url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
@@ -52,9 +71,19 @@ function DisplayAlzemiersFile(props) {
                     visible: true, 
                   }
                 ];
+                volumeList2= [
+                  {
+                    url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    colormap: "red",
+                    opacity: 0.9,
+                    visible: true, 
+                  }
+                ];
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
+                nv4.loadVolumes(volumeList2);
+                nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
             }
@@ -65,10 +94,11 @@ function DisplayAlzemiersFile(props) {
 
   }
 
+  
 
   function runProjection(){
     console.log("Running Projection");
-    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+    fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/project?disease=Alzhemier&fileName=${props.fileName}&min=${props.min}&max=${props.max}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -78,12 +108,14 @@ function DisplayAlzemiersFile(props) {
         .then(data => {
             if (data.url) {
               var volumeList1 = null;
+              var volumeList2 = null;
               if(isBoundaryLoaded && !props.removeBoundary) {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -95,11 +127,26 @@ function DisplayAlzemiersFile(props) {
                         visible: true,
                     }
                 ];
+                volumeList2 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
               } else {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 volumeList1= [
                   {
-                    url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
                     colormap: "red",
                     opacity: 0.9,
                     visible: true, 
@@ -108,6 +155,8 @@ function DisplayAlzemiersFile(props) {
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
+                nv4.loadVolumes(volumeList2);
+                nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
             }
@@ -117,6 +166,7 @@ function DisplayAlzemiersFile(props) {
         });
   }
 
+  
 
   function handleIntensityChange(data) {
     console.log(data.values[0].value);
@@ -139,13 +189,22 @@ function DisplayAlzemiersFile(props) {
         visible: true, 
       }
     ];
+    var volumes1 = [
+      {
+        url: nv4MainUrl, // use the URL from the response
+        colormap: "red",
+        opacity: 0.9,
+        visible: true, 
+      }
+    ];
     console.log(volumes)
     nv2.loadVolumes(volumes);
+    nv4.loadVolumes(volumes1)
   } else if(!initialRender){
     console.log("Printing at the start of renderning")
     var volumeList1 = [
       {
-        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Boundary/${props.fileName}`, // use the URL from the response
         colormap: "gray",
         opacity: 0.2,
         visible: true,
@@ -157,7 +216,22 @@ function DisplayAlzemiersFile(props) {
             visible: true,
         }
     ];
+    var volumeList2 = [
+      {
+        url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Boundary/${props.fileName}`, // use the URL from the response
+        colormap: "gray",
+        opacity: 0.2,
+        visible: true,
+    },
+        {
+            url: nv4MainUrl, // use the URL from the response
+            colormap: "red",
+            opacity: 0.9,
+            visible: true,
+        }
+    ];
     nv2.loadVolumes(volumeList1);
+    nv4.loadVolumes(volumeList2);
   }
   },[props.removeBoundary])
 
@@ -178,6 +252,7 @@ function DisplayAlzemiersFile(props) {
   useEffect(() => {
     if (props.runClicked) {
         runMaxProjection();
+        // runMaxProjectionDisease();
         props.onRunProcessed();
     }
     }, [props.runClicked]);
@@ -186,6 +261,7 @@ function DisplayAlzemiersFile(props) {
   useEffect(() => {
     if (props.projectClicked) {
         runProjection();
+        // runProjectionDisease();
         props.onProjectProcessed();
     }
     }, [props.projectClicked]);
@@ -195,7 +271,15 @@ function DisplayAlzemiersFile(props) {
     if (props.fileName) {
       var volumeList1 = [
           {
-            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`,
+            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Inverted/${props.fileName}`,
+            colormap: "actc",
+            opacity: 1,
+            visible: true,   
+          }  
+        ];
+        var volumeList2 = [
+          {
+            url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Inverted/${props.fileName}`,
             colormap: "actc",
             opacity: 1,
             visible: true,   
@@ -205,22 +289,25 @@ function DisplayAlzemiersFile(props) {
       nv1.onImageLoaded = function(volume){
         console.log('volume loaded');
       }
-      var url = `${process.env.REACT_APP_FLASK_API_URL}/data/Inverted/${props.fileName}`
+      var url = `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Inverted/${props.fileName}`
+      var url1 = `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Inverted/${props.fileName}`
       console.log(url);
       if(nv1Url === null){
         console.log("nv1 is already loaded")
       }
       else{
         nv1.removeVolumeByUrl(nv1Url)
+        nv3.removeVolumeByUrl(nv3Url)
       }
       setNv1Url(url)
+      setNv3Url(url1)
       // nv1.addVolumeFromUrl({url,colormap:"actc"})      
       nv1.loadVolumes(volumeList1);
       nv1.setSliceType(nv1.sliceTypeAxial);
-      nv3.loadVolumes(volumeList1);
+      nv3.loadVolumes(volumeList2);
       nv3.setSliceType(nv1.sliceTypeAxial);
 
-      fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
+      fetch(`${process.env.REACT_APP_FLASK_API_URL}/api/max?disease=Alzhemier&fileName=${props.fileName}&max=${props.maxPercentile}&smooth=${props.smooth}&session_id=${props.session_id}&url=${process.env.REACT_APP_FLASK_API_URL}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -230,12 +317,14 @@ function DisplayAlzemiersFile(props) {
         .then(data => {
             if (data.url) {
               var volumeList1 = null;
+              var volumeList2 = null;
               if(isBoundaryLoaded && !props.removeBoundary) {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 console.log("here")
                  volumeList1 = [
                   {
-                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Boundary/${props.fileName}`, // use the URL from the response
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Normal/Boundary/${props.fileName}`, // use the URL from the response
                     colormap: "gray",
                     opacity: 0.25,
                     visible: true,
@@ -247,8 +336,23 @@ function DisplayAlzemiersFile(props) {
                         visible: true,
                     }
                 ];
+                volumeList2 = [
+                  {
+                    url: `${process.env.REACT_APP_FLASK_API_URL}/data/Alzhemier/Disease/Boundary/${props.fileName}`, // use the URL from the response
+                    colormap: "gray",
+                    opacity: 0.25,
+                    visible: true,
+                },
+                    {
+                        url: data.urld + `?nocache=${new Date().getTime()}`, // use the URL from the response
+                        colormap: "red",
+                        opacity: 0.9,
+                        visible: true,
+                    }
+                ];
               } else {
                 setNv2MainUrl(data.url + `?nocache=${new Date().getTime()}`)
+                setNv4MainUrl(data.urld + `?nocache=${new Date().getTime()}`)
                 volumeList1= [
                   {
                     url: data.url + `?nocache=${new Date().getTime()}`, // use the URL from the response
@@ -257,10 +361,18 @@ function DisplayAlzemiersFile(props) {
                     visible: true, 
                   }
                 ];
+                volumeList2= [
+                  {
+                    url: data.urld+ `?nocache=${new Date().getTime()}`, // use the URL from the response
+                    colormap: "red",
+                    opacity: 0.9,
+                    visible: true, 
+                  }
+                ];
               }
                 nv2.loadVolumes(volumeList1);
                 nv2.updateGLVolume();
-                nv4.loadVolumes(volumeList1);
+                nv4.loadVolumes(volumeList2);
                 nv4.updateGLVolume();
             } else {
                 console.error('URL not found in the response');
