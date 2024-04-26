@@ -31,8 +31,8 @@ def create_boundary(fileName,disease):
 
         boundary_img1 = nib.Nifti1Image(boundary_data1, img1.affine)
         boundary_img2 = nib.Nifti1Image(boundary_data2, img2.affine)
-        path = f'../Data/{disease}/Normal/Boundary/{fileName}'
-        path = f'../Data/{disease}/Disease/Boundary/{fileName}'
+        path1 = f'../Data/{disease}/Normal/Boundary/{fileName}'
+        path2 = f'../Data/{disease}/Disease/Boundary/{fileName}'
         nib.save(boundary_img1, path1)
         nib.save(boundary_img2, path2)
     else:

@@ -90,7 +90,7 @@ def check_files():
         missing_filesAC = filesA - filesC
         
         if missing_filesAC:
-            for missing_file in missing_filesAD:
+            for missing_file in missing_filesAC:
                 print("creating inverted file  for :",missing_file)
                 invert(missing_file,None)
         else:
@@ -111,7 +111,7 @@ def check_files():
         missing_filesAC = filesA - filesC
         
         if missing_filesAC:
-            for missing_file in missing_filesAD:
+            for missing_file in missing_filesAC:
                 print("creating inverted file  for :",missing_file)
                 invert(missing_file,"Alzhemier")
         else:
@@ -132,7 +132,7 @@ def check_files():
         missing_filesAC = filesA - filesC
         
         if missing_filesAC:
-            for missing_file in missing_filesAD:
+            for missing_file in missing_filesAC:
                 print("creating inverted file  for :",missing_file)
                 invert(missing_file,"Pompe")
         else:

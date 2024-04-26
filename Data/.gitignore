@@ -8,3 +8,15 @@ Original/*
 !Original/.gitkeep
 Temp/*
 !Temp/.gitkeep
+Alzhemier/Normal/Original/*
+Alzhemier/Normal/Inverted/*
+Alzhemier/Normal/Boundary/*
+Alzhemier/Disease/Original/*
+Alzhemier/Disease/Inverted/*
+Alzhemier/Disease/Boundary/*
+Pompe/Normal/Original/*
+Pompe/Normal/Inverted/*
+Pompe/Normal/Boundary/*
+Pompe/Disease/Original/*
+Pompe/Disease/Inverted/*
+Pompe/Disease/Boundary/*
